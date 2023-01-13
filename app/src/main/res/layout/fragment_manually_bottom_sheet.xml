@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".stopwatch.ManuallyBottomSheetFragment"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data i godzina rozpoczęcia"
+        android:layout_margin="10dp"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textIsSelectable="false"
+            android:clickable="false"
+            android:focusable="false"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_time_work"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Czas trwania"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_work_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textIsSelectable="false"
+            android:clickable="false"
+            android:focusable="false"
+
+            />
+        <Button
+            android:id="@+id/save_data_manually_bs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="zapisz do bazy"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/red_1867"/>
+
+
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+</LinearLayout>

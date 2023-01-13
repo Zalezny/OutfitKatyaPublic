@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout android:id="@+id/standard_bottom_sheet"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textColorHighlight="@color/red_light"
+        android:hint="Nazwa stroju"
+        app:counterEnabled="true"
+        app:counterMaxLength="36"
+        app:boxStrokeColor="@color/red_light"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_outfit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:lines="1"
+            android:inputType="text"
+            android:maxLength="36"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</FrameLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Katya Outfit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preference_stopwatch_file_key">STOPWATCH_FIlE_KEY_321</string>
+    <string name="preference_stopwatch_outfit_key">OUTFIT_ID_KEY_321</string>
+    <string name="preference_stopwatch_person_key">PERSON_KEY_321</string>
+    <string name="preference_stopwatch_time_key">TIME_KEY_321</string>
+    <string name="preference_stopwatch_date_key">DATE_KEY_321</string>
+    <string name="preference_time_activity_file_key">TIME_ACTIVITY_FILE_KEY_321</string>
+    <string name="preference_time_activity_countInTab_key">COUNT_IN_TAB_KEY_321</string>
+    <string name="preference_time_activity_isEnded_key">IS_ENDED_KEY_321</string>
+</resources>
