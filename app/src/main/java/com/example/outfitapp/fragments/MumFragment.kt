@@ -28,8 +28,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import com.example.outfitapp.ConstDatabase.OUTFIT_URL
-import com.example.outfitapp.ConstDatabase.OUTFIT_KEY
+/*import com.example.outfitapp.ConstDatabase.OUTFIT_URL
+import com.example.outfitapp.ConstDatabase.OUTFIT_KEY*/
 import com.example.outfitapp.TotalTimeHelper
 import com.example.outfitapp.util.TimeUtil
 import com.google.android.material.snackbar.Snackbar
@@ -79,7 +79,7 @@ class MumFragment : Fragment() {
         momRecyclerView.setHasFixedSize(true)
 
 
-        getData(outfitID)
+//        getData(outfitID)
 
 
         //ViewModel add to recycler view from Stoperfragment.kt
@@ -118,7 +118,7 @@ class MumFragment : Fragment() {
         return view
     }
 
-    private fun getData(outfitID : String?) {
+/*    private fun getData(outfitID : String?) {
 
         //show progress bar
         momProgressBar.visibility = View.VISIBLE
@@ -318,7 +318,7 @@ class MumFragment : Fragment() {
             }
 
         })
-    }
+    }*/
 
     //check and return date today, yesterday format
     private fun finalDateFormat(dateJSON: String) : String {

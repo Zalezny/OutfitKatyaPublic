@@ -6,3 +6,5 @@ const val ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE"
 const val NOTIFICATION_CHANNEL_ID = "timer_channel_id"
 const val NOTIFICATION_CHANNEL_NAME = "timer_channel"
 const val NOTIFICATION_ID = 143
+
+const val IS_KATYA = true

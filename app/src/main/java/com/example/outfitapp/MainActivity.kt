@@ -15,14 +15,19 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.outfitapp.recyclers.OutfitAdapter
 import com.example.outfitapp.fragments.BottomSheetFragment
 import com.example.outfitapp.models.OutfitDataModel
+import com.example.outfitapp.roomdatabase.AppDatabase
+import com.example.outfitapp.roomdatabase.Outfit
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import java.io.IOException
 import okhttp3.*
 import org.json.JSONArray
@@ -48,12 +53,14 @@ class MainActivity : AppCompatActivity() {
 
         outfitProgressBar = findViewById(R.id.outfit_progress_bar)
 
+
+
         //Take data from bottom sheet and adding it to recycler view
         supportFragmentManager
             .setFragmentResultListener("BottomSheetFragmentRequest", this) { _, bundle ->
                 //take result from bottom sheet
                 val resultOutfitName : String = bundle.getString("outfitName")!!
-                val resultMainID : String = bundle.getString("mainID")!!
+                val resultMainID : String = bundle.getInt("mainID")!!.toString()
                 val createdData = OutfitDataModel(resultOutfitName, resultMainID, false)
                 //Add item to recycler View
                 outfitAdapter.addItem(createdData)
@@ -142,7 +149,36 @@ class MainActivity : AppCompatActivity() {
 
         outfitArrayList = arrayListOf()
 
-        //Use library okHttpClient to take body from JSON
+        /** FOR APP WITH ROOM DATABASE **/
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "outfit-database"
+        ).fallbackToDestructiveMigration().build()
+
+        lifecycle.coroutineScope.launch {
+            val outfitDao = db.outfitDao()
+            val outfits : List<Outfit> = outfitDao.getAll()
+            //convert Outfit to OutfitDataModel
+            for(item in outfits)
+            {
+                val data = OutfitDataModel(item.outfitName!!, item.oid.toString(), item.isEnded!!)
+                outfitArrayList.add(data)
+            }
+            runOnUiThread {
+                outfitAdapter = OutfitAdapter(outfitArrayList)
+                outfitRecyclerView.adapter = outfitAdapter
+
+                outfitProgressBar.visibility = View.GONE
+            }
+        }
+
+
+
+
+        /** FOR REALLY APP WITH ONLINE DATABASE **/
+
+       /* //Use library okHttpClient to take body from JSON
         val okHttpClient = OkHttpClient()
 
         val request = Request.Builder()
@@ -209,7 +245,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        })
+        })*/
 
 
     }

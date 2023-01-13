@@ -12,9 +12,17 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.coroutineScope
+import androidx.room.Room
 import com.example.outfitapp.R
+import com.example.outfitapp.models.OutfitDataModel
+import com.example.outfitapp.recyclers.OutfitAdapter
+import com.example.outfitapp.roomdatabase.AppDatabase
+import com.example.outfitapp.roomdatabase.IdGeneratorHelper
+import com.example.outfitapp.roomdatabase.Outfit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -23,11 +31,9 @@ import org.json.JSONTokener
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random.Default.nextInt
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
-
-
-
 
 
     override fun onCreateView(
@@ -62,7 +68,37 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun postToServer(amount: String) {
 
-        val json = JsonObject()
+        /** FOR APP WITH ROOM DATABASE **/
+        val db = Room.databaseBuilder(
+            activity!!.applicationContext,
+            AppDatabase::class.java, "outfit-database"
+        ).fallbackToDestructiveMigration().build()
+        lifecycle.coroutineScope.launch {
+            val outfitDao = db.outfitDao()
+            
+            val item = Outfit(isEnded = false, outfitName = amount, oid = IdGeneratorHelper(activity!!).takeNewId())
+            outfitDao.insertAll(item)
+
+            activity!!.runOnUiThread {
+                val bundle = bundleOf(
+                    "outfitName" to amount,
+                    "mainID" to item.oid
+                )
+                //set Fragment Result (invoke in MainActivity)
+                setFragmentResult("BottomSheetFragmentRequest", bundle)
+
+                //remove BottomSheetFragment
+                dismiss()
+            }
+        }
+
+
+
+
+
+
+        /** FOR REALLY APP WITH ONLINE DATABASE **/
+        /*val json = JsonObject()
         json.addProperty("title", amount)
 
         //create time
@@ -111,7 +147,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
 
             }
-        })
+        })*/
     }
 
     fun textMsg(msg: String) {

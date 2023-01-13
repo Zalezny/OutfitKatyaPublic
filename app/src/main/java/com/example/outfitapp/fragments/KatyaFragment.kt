@@ -79,7 +79,7 @@ class KatyaFragment : Fragment() {
 
 
 
-        getData(outfitID)
+//        getData(outfitID)
 
         //ViewModel add to recycler view from Stoperfragment.kt
         model.getKatya().observe(viewLifecycleOwner, androidx.lifecycle.Observer { map ->
@@ -122,7 +122,7 @@ class KatyaFragment : Fragment() {
 
 
 
-    private fun getData(id : String?)  {
+    /*private fun getData(id : String?)  {
         //show progress bar
         katyaProgressBar.visibility = View.VISIBLE
 
@@ -330,7 +330,7 @@ class KatyaFragment : Fragment() {
             }
 
         })
-    }
+    }*/
 
     //check and return date today, yesterday format
     private fun finalDateFormat(dateJSON: String) : String {

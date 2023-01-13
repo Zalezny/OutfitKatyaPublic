@@ -88,7 +88,7 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
                     //data list is refreshes
                     notifyDataSetChanged()
                     //send request about delete it from base (above is only local)
-                    requestDatabase(currentItem.mainId!!, DELETE_OUTFIT_DATABASE_KEY)
+//                    requestDatabase(currentItem.mainId!!, DELETE_OUTFIT_DATABASE_KEY)
 
 
                 }.create().show()
@@ -128,11 +128,11 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
         outfitList.removeAt(pos)
         outfitList.add(pos, newItem)
         notifyItemChanged(pos)
-        requestDatabase(newItem.mainId!!, CHANGE_ENDED_OUTFIT_DATABASE_KEY)
+/*        requestDatabase(newItem.mainId!!, CHANGE_ENDED_OUTFIT_DATABASE_KEY)*/
     }
 
 
-    private fun requestDatabase(idOutfit: String, action: String) {
+/*    private fun requestDatabase(idOutfit: String, action: String) {
         val dynamicUrl = "${ConstDatabase.OUTFIT_URL}$idOutfit"
 
         val okHttpClient = OkHttpClient()
@@ -183,7 +183,7 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
 
             })
         }
-    }
+    }*/
 
     companion object {
         private const val DELETE_OUTFIT_DATABASE_KEY = "delete_outfit_database_key"
