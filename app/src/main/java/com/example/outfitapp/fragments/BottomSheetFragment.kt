@@ -15,6 +15,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.coroutineScope
 import androidx.room.Room
 import com.example.outfitapp.R
+import com.example.outfitapp.application.OutfitApplication
 import com.example.outfitapp.models.OutfitDataModel
 import com.example.outfitapp.recyclers.OutfitAdapter
 import com.example.outfitapp.roomdatabase.AppDatabase
@@ -69,12 +70,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private fun postToServer(amount: String) {
 
         /** FOR APP WITH ROOM DATABASE **/
-        val db = Room.databaseBuilder(
-            activity!!.applicationContext,
-            AppDatabase::class.java, "outfit-database"
-        ).fallbackToDestructiveMigration().build()
+        val outfitDao = (activity!!.application as OutfitApplication).repository
         lifecycle.coroutineScope.launch {
-            val outfitDao = db.outfitDao()
             
             val item = Outfit(isEnded = false, outfitName = amount, oid = IdGeneratorHelper(activity!!).takeNewId())
             outfitDao.insertAll(item)

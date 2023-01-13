@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.outfitapp.application.OutfitApplication
 import com.example.outfitapp.recyclers.OutfitAdapter
 import com.example.outfitapp.fragments.BottomSheetFragment
 import com.example.outfitapp.models.OutfitDataModel
@@ -151,13 +152,9 @@ class MainActivity : AppCompatActivity() {
 
         /** FOR APP WITH ROOM DATABASE **/
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "outfit-database"
-        ).fallbackToDestructiveMigration().build()
+        val outfitDao = (application as OutfitApplication).repository
 
         lifecycle.coroutineScope.launch {
-            val outfitDao = db.outfitDao()
             val outfits : List<Outfit> = outfitDao.getAll()
             //convert Outfit to OutfitDataModel
             for(item in outfits)
@@ -166,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 outfitArrayList.add(data)
             }
             runOnUiThread {
-                outfitAdapter = OutfitAdapter(outfitArrayList)
+                outfitAdapter = OutfitAdapter(outfitArrayList, application)
                 outfitRecyclerView.adapter = outfitAdapter
 
                 outfitProgressBar.visibility = View.GONE

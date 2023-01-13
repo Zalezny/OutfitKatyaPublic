@@ -184,12 +184,12 @@ class StoperFragment : Fragment() {
         StopwatchService.dateJSONFormat.observe(viewLifecycleOwner) {
             //if will be stop click (without it, send data on start observer)
             if(isDataToSend) {
-//                sendData(
-//                    mainID,
-//                    IS_KATYA,
-//                    timeToSent,
-//                    it
-//                )
+               /* sendData(
+                    mainID,
+                    IS_KATYA,
+                    timeToSent,
+                    it
+                )*/
                 //set data send on false
                 isDataToSend = false
             }
@@ -263,83 +263,83 @@ class StoperFragment : Fragment() {
     }
 
     //send data to database
-//    private fun sendData(outfitID: String, person: Boolean, time : String, date : String) {
-//
-//
-//        val dynamicUrl = ConstDatabase.OUTFIT_URL + outfitID
-//        val name = if(person) ConstDatabase.KATYA else ConstDatabase.MOM
-//        //00:00:00
-//        val hourTime = "${time[0]}${time[1]}"
-//        val minuteTime = "${time[3]}${time[4]}"
-//        val secondTime = time.takeLast(2)
-//
-//        Log.d("SEND DATA", "Sending data: id: $id, person: $name, hourTime: $hourTime," +
-//                "minuteTime: $minuteTime, secondTime: $secondTime, date: $date ")
-//
-//        val json = JsonObject()
-//        json.addProperty("person", name) //1- Mom, 2- Katya
-//        json.addProperty("hour", hourTime.toInt())
-//        json.addProperty("minute", minuteTime.toInt())
-//        json.addProperty("second", secondTime.toInt())
-//        json.addProperty("date", date)
-//
-//        val okHttpClient = OkHttpClient()
-//        val request = Request.Builder()
-//            .patch(json.toString().toRequestBody("application/json".toMediaType()))
-//            .url(dynamicUrl)
-//            .addHeader("authorization", ConstDatabase.OUTFIT_KEY)
-//            .build()
-//        okHttpClient.newCall(request).enqueue(object : Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                Log.e("FailureResponse", "$e")
-//                activity!!.runOnUiThread {
-//                    repeatSend(outfitID, person, time, date)
-//                }
-//
-//            }
-//
-//            override fun onResponse(call: Call, response: Response) {
-//
-//                if (response.isSuccessful) {
-//                    Log.d(javaClass.name, "Response is Successful")
-//                    activity!!.runOnUiThread {
-//                        Toast.makeText(activity, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
-//                        //take id from body message (send back from server)
-//                        val bodyMsg = response.body!!.string()
-//                        val json = JSONTokener(bodyMsg).nextValue() as JSONObject
-//                        val hourID = json.getString("id")
-//                        //refresh recycler view in Katya or Mom Fragment
-//                        refreshTimeAdapter(date, time, hourID)
-//                    }
-//
-//                }
-//                else
-//                    Log.e(javaClass.name, "Request is not RECEIVED")
-//            }
-//        })
-//    }
+/*    private fun sendData(outfitID: String, person: Boolean, time : String, date : String) {
 
-//    private fun repeatSend(outfitID: String, person: Boolean, time : String, date : String) {
-//        var isRepeat = false
-//        Snackbar.make(cvChange, "Nie udało się wysłać $time", Snackbar.LENGTH_INDEFINITE)
-//            .setAction("Powtórz") {
-//                sendData(outfitID, person, time, date)
-//                isRepeat = true
-//                sharedPref.edit().putString(getString(R.string.preference_stopwatch_outfit_key), null).commit()
-//            }.show()
-//
-//        if(!isRepeat)
-//        {
-//            with(sharedPref.edit()) {
-//                putString(getString(R.string.preference_stopwatch_outfit_key), outfitID)
-//                putBoolean(getString(R.string.preference_stopwatch_person_key), person)
-//                putString(getString(R.string.preference_stopwatch_time_key), time)
-//                putString(getString(R.string.preference_stopwatch_date_key), date)
-//                apply()
-//            }
-//
-//        }
-//    }
+
+        val dynamicUrl = ConstDatabase.OUTFIT_URL + outfitID
+        val name = if(person) ConstDatabase.KATYA else ConstDatabase.MOM
+        //00:00:00
+        val hourTime = "${time[0]}${time[1]}"
+        val minuteTime = "${time[3]}${time[4]}"
+        val secondTime = time.takeLast(2)
+
+        Log.d("SEND DATA", "Sending data: id: $id, person: $name, hourTime: $hourTime," +
+                "minuteTime: $minuteTime, secondTime: $secondTime, date: $date ")
+
+        val json = JsonObject()
+        json.addProperty("person", name) //1- Mom, 2- Katya
+        json.addProperty("hour", hourTime.toInt())
+        json.addProperty("minute", minuteTime.toInt())
+        json.addProperty("second", secondTime.toInt())
+        json.addProperty("date", date)
+
+        val okHttpClient = OkHttpClient()
+        val request = Request.Builder()
+            .patch(json.toString().toRequestBody("application/json".toMediaType()))
+            .url(dynamicUrl)
+            .addHeader("authorization", ConstDatabase.OUTFIT_KEY)
+            .build()
+        okHttpClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("FailureResponse", "$e")
+                activity!!.runOnUiThread {
+                    repeatSend(outfitID, person, time, date)
+                }
+
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+
+                if (response.isSuccessful) {
+                    Log.d(javaClass.name, "Response is Successful")
+                    activity!!.runOnUiThread {
+                        Toast.makeText(activity, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
+                        //take id from body message (send back from server)
+                        val bodyMsg = response.body!!.string()
+                        val json = JSONTokener(bodyMsg).nextValue() as JSONObject
+                        val hourID = json.getString("id")
+                        //refresh recycler view in Katya or Mom Fragment
+                        refreshTimeAdapter(date, time, hourID)
+                    }
+
+                }
+                else
+                    Log.e(javaClass.name, "Request is not RECEIVED")
+            }
+        })
+    }*/
+
+/*    private fun repeatSend(outfitID: String, person: Boolean, time : String, date : String) {
+        var isRepeat = false
+        Snackbar.make(cvChange, "Nie udało się wysłać $time", Snackbar.LENGTH_INDEFINITE)
+            .setAction("Powtórz") {
+                sendData(outfitID, person, time, date)
+                isRepeat = true
+                sharedPref.edit().putString(getString(R.string.preference_stopwatch_outfit_key), null).commit()
+            }.show()
+
+        if(!isRepeat)
+        {
+            with(sharedPref.edit()) {
+                putString(getString(R.string.preference_stopwatch_outfit_key), outfitID)
+                putBoolean(getString(R.string.preference_stopwatch_person_key), person)
+                putString(getString(R.string.preference_stopwatch_time_key), time)
+                putString(getString(R.string.preference_stopwatch_date_key), date)
+                apply()
+            }
+
+        }
+    }*/
 
     private fun requestPermissionNotification() {
         when {

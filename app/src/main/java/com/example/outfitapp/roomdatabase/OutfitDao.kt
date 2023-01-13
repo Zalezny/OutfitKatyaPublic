@@ -13,6 +13,12 @@ interface OutfitDao {
     @Insert
     suspend fun insertAll(vararg outfitName: Outfit)
 
+    @Query("UPDATE outfit SET is_ended= :isEnded WHERE oid = :outfitId")
+    suspend fun setIsEndedById(outfitId: Int, isEnded: Boolean): Int
+
+    @Query("DELETE FROM outfit WHERE oid = :outfitId")
+    suspend fun deleteByOutfitId(outfitId: Int)
+
     @Delete
     suspend fun delete(outfitName: Outfit)
 

@@ -1,6 +1,8 @@
 package com.example.outfitapp.recyclers
 
 import android.app.AlertDialog
+import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 
@@ -13,8 +15,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.outfitapp.R
 import com.example.outfitapp.TimeActivity
+import com.example.outfitapp.application.OutfitApplication
 import com.example.outfitapp.models.OutfitDataModel
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -22,10 +28,11 @@ import java.io.IOException
 
 
 
-class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : RecyclerView.Adapter<OutfitAdapter.OutfitViewHolder>() {
+class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>,
+                    private var application: Application
+) : RecyclerView.Adapter<OutfitAdapter.OutfitViewHolder>() {
 
     private var isVisible = false
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutfitViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -88,7 +95,7 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
                     //data list is refreshes
                     notifyDataSetChanged()
                     //send request about delete it from base (above is only local)
-//                    requestDatabase(currentItem.mainId!!, DELETE_OUTFIT_DATABASE_KEY)
+                    requestDatabase(currentItem.mainId!!, DELETE_OUTFIT_DATABASE_KEY)
 
 
                 }.create().show()
@@ -128,12 +135,34 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
         outfitList.removeAt(pos)
         outfitList.add(pos, newItem)
         notifyItemChanged(pos)
-/*        requestDatabase(newItem.mainId!!, CHANGE_ENDED_OUTFIT_DATABASE_KEY)*/
+        requestDatabase(newItem.mainId!!, CHANGE_ENDED_OUTFIT_DATABASE_KEY)
     }
 
 
-/*    private fun requestDatabase(idOutfit: String, action: String) {
-        val dynamicUrl = "${ConstDatabase.OUTFIT_URL}$idOutfit"
+    private fun requestDatabase(idOutfit: String, action: String) {
+
+        /** FOR APP WITH ROOM DATABASE **/
+
+        val outfitDao = (application as OutfitApplication).repository
+
+        if(action == DELETE_OUTFIT_DATABASE_KEY)
+        {
+            CoroutineScope(Dispatchers.IO).launch {
+                outfitDao.deleteByOutfitId(idOutfit.toInt())
+            }
+
+        }
+
+        if (action == CHANGE_ENDED_OUTFIT_DATABASE_KEY)
+        {
+            CoroutineScope(Dispatchers.IO).launch {
+                outfitDao.setIsEndedById(idOutfit.toInt(), true)
+            }
+        }
+
+        /** FOR REALLY APP WITH ONLINE DATABASE **/
+
+        /*val dynamicUrl = "${ConstDatabase.OUTFIT_URL}$idOutfit"
 
         val okHttpClient = OkHttpClient()
 
@@ -182,8 +211,8 @@ class OutfitAdapter(private var outfitList : ArrayList<OutfitDataModel>) : Recyc
                 }
 
             })
-        }
-    }*/
+        }*/
+    }
 
     companion object {
         private const val DELETE_OUTFIT_DATABASE_KEY = "delete_outfit_database_key"
