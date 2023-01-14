@@ -10,4 +10,8 @@ class OutfitApplication : Application() {
 
     // A variable for repository.
     val repository by lazy { database.outfitDao() }
+
+    val repositoryKatyaTime by lazy { database.katyaTimeDao() }
+
+    val db by lazy { database }
 }

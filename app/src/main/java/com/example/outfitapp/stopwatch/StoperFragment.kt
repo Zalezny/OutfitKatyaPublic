@@ -22,13 +22,22 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.coroutineScope
+import androidx.room.withTransaction
 import com.example.outfitapp.*
+import com.example.outfitapp.application.OutfitApplication
+import com.example.outfitapp.models.OutfitDataModel
+import com.example.outfitapp.recyclers.OutfitAdapter
+import com.example.outfitapp.roomdatabase.IdGeneratorHelper
+import com.example.outfitapp.roomdatabase.KatyaTime
+import com.example.outfitapp.roomdatabase.Outfit
 import com.example.outfitapp.util.StopwatchUtil
 import com.example.outfitapp.util.TimeUtil
 
 import com.example.outfitapp.viewmodels.TimeViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -101,7 +110,7 @@ class StoperFragment : Fragment() {
             val prefTime = sharedPref.getString(getString(R.string.preference_stopwatch_time_key), null)
             val prefDate = sharedPref.getString(getString(R.string.preference_stopwatch_date_key), null)
             if(prefOutfitID != null && prefTime != null && prefDate != null && prefPerson == IS_KATYA)
-//                repeatSend(prefOutfitID, prefPerson, prefTime, prefDate)
+                repeatSend(prefOutfitID, prefPerson, prefTime, prefDate)
 
 
         btnManuallyAdd.setOnClickListener {
@@ -139,7 +148,7 @@ class StoperFragment : Fragment() {
             //make time to sendData
             val time = makeTimeString(hour.toLong(),minute.toLong(),second.toLong())
             //send data to database
-//            sendData(mainID, IS_KATYA, time, date!!)
+            sendData(mainID, IS_KATYA, time, date!!)
 
         }
 
@@ -184,12 +193,12 @@ class StoperFragment : Fragment() {
         StopwatchService.dateJSONFormat.observe(viewLifecycleOwner) {
             //if will be stop click (without it, send data on start observer)
             if(isDataToSend) {
-               /* sendData(
+                sendData(
                     mainID,
                     IS_KATYA,
                     timeToSent,
                     it
-                )*/
+                )
                 //set data send on false
                 isDataToSend = false
             }
@@ -263,15 +272,53 @@ class StoperFragment : Fragment() {
     }
 
     //send data to database
-/*    private fun sendData(outfitID: String, person: Boolean, time : String, date : String) {
+    private fun sendData(outfitID: String, person: Boolean, time : String, date : String) {
 
 
-        val dynamicUrl = ConstDatabase.OUTFIT_URL + outfitID
-        val name = if(person) ConstDatabase.KATYA else ConstDatabase.MOM
+
+
+
+
+
+        val name = if(person) KATYA else MOM
         //00:00:00
         val hourTime = "${time[0]}${time[1]}"
         val minuteTime = "${time[3]}${time[4]}"
         val secondTime = time.takeLast(2)
+
+        /** FOR APP WITH ROOM DATABASE **/
+        lifecycle.coroutineScope.launch {
+            if(name == KATYA) {
+                val timeToSend = KatyaTime(
+                    hour = hourTime.toInt(),
+                    minute = minuteTime.toInt(),
+                    second = secondTime.toInt(),
+                    date = date,
+                    outfitCreatorId = outfitID.toInt(),
+                    katyaTimeId = IdGeneratorHelper(activity!!).takeNewKatyaTimeId()
+                )
+                val database = (activity!!.application as OutfitApplication).db
+                val katyaTimeDao = (activity!!.application as OutfitApplication).repositoryKatyaTime
+
+                database.withTransaction {
+                    katyaTimeDao.insertKatyaTime(timeToSend)
+                    val result = database.outfitDao().getOutfitWithKatyaTime()
+                    Log.d("TESTUIEMY", "$result")
+                }
+
+                activity!!.runOnUiThread {
+                    Toast.makeText(activity, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
+
+                    refreshTimeAdapter(date, time, timeToSend.katyaTimeId.toString())
+                }
+            }
+            //TODO: Mom Hours
+
+        }
+
+        /** FOR REALLY APP WITH ONLINE DATABASE **/
+
+        /*val dynamicUrl = ConstDatabase.OUTFIT_URL + outfitID
 
         Log.d("SEND DATA", "Sending data: id: $id, person: $name, hourTime: $hourTime," +
                 "minuteTime: $minuteTime, secondTime: $secondTime, date: $date ")
@@ -316,10 +363,10 @@ class StoperFragment : Fragment() {
                 else
                     Log.e(javaClass.name, "Request is not RECEIVED")
             }
-        })
-    }*/
+        })*/
+    }
 
-/*    private fun repeatSend(outfitID: String, person: Boolean, time : String, date : String) {
+    private fun repeatSend(outfitID: String, person: Boolean, time : String, date : String) {
         var isRepeat = false
         Snackbar.make(cvChange, "Nie udało się wysłać $time", Snackbar.LENGTH_INDEFINITE)
             .setAction("Powtórz") {
@@ -339,7 +386,7 @@ class StoperFragment : Fragment() {
             }
 
         }
-    }*/
+    }
 
     private fun requestPermissionNotification() {
         when {

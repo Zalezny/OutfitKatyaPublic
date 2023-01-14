@@ -155,9 +155,9 @@ class MainActivity : AppCompatActivity() {
         val outfitDao = (application as OutfitApplication).repository
 
         lifecycle.coroutineScope.launch {
-            val outfits : List<Outfit> = outfitDao.getAll()
+            val outfits : List<Outfit> = outfitDao.getOutfits()
             //convert Outfit to OutfitDataModel
-            for(item in outfits)
+            for(item in outfits.reversed())
             {
                 val data = OutfitDataModel(item.outfitName!!, item.oid.toString(), item.isEnded!!)
                 outfitArrayList.add(data)

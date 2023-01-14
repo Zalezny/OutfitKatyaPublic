@@ -31,6 +31,8 @@ import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.random.Random.Default.nextInt
 
@@ -72,9 +74,15 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         /** FOR APP WITH ROOM DATABASE **/
         val outfitDao = (activity!!.application as OutfitApplication).repository
         lifecycle.coroutineScope.launch {
+            val dateNow =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
             
-            val item = Outfit(isEnded = false, outfitName = amount, oid = IdGeneratorHelper(activity!!).takeNewId())
-            outfitDao.insertAll(item)
+            val item = Outfit(
+                isEnded = false,
+                outfitName = amount,
+                oid = IdGeneratorHelper(activity!!).takeNewOutfitId(),
+                date = dateNow
+            )
+            outfitDao.insertOutfit(item)
 
             activity!!.runOnUiThread {
                 val bundle = bundleOf(

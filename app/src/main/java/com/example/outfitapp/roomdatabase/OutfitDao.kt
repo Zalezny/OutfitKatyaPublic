@@ -1,17 +1,14 @@
 package com.example.outfitapp.roomdatabase
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface OutfitDao {
     @Query("SELECT * FROM outfit")
-    suspend fun getAll(): List<Outfit>
+    suspend fun getOutfits(): List<Outfit>
 
     @Insert
-    suspend fun insertAll(vararg outfitName: Outfit)
+    suspend fun insertOutfit(vararg outfitName: Outfit)
 
     @Query("UPDATE outfit SET is_ended= :isEnded WHERE oid = :outfitId")
     suspend fun setIsEndedById(outfitId: Int, isEnded: Boolean): Int
@@ -22,4 +19,16 @@ interface OutfitDao {
     @Delete
     suspend fun delete(outfitName: Outfit)
 
+    @Transaction
+    @Query("SELECT * FROM outfit")
+    suspend fun getOutfitWithKatyaTime() : List<OutfitWithKatyaTime>
+
+
 }
+
+@Dao
+interface KatyaTimeDao {
+    @Insert
+    suspend fun insertKatyaTime(vararg katyaTime: KatyaTime)
+}
+

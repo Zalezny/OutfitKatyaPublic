@@ -8,3 +8,5 @@ const val NOTIFICATION_CHANNEL_NAME = "timer_channel"
 const val NOTIFICATION_ID = 143
 
 const val IS_KATYA = true
+const val KATYA = 2
+const val MOM = 1

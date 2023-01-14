@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Outfit::class], version = 1)
+@Database(entities = [Outfit::class, KatyaTime::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun outfitDao(): OutfitDao
+    abstract fun katyaTimeDao() : KatyaTimeDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

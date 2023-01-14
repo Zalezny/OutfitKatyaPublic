@@ -3,6 +3,14 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/danie/AndroidStudioProjects/OutfitKatyaPublic/app/src/main/res/layout/fragment_katya.xml" value="0.14387031408308004" />
+        <entry key="..\:/Users/danie/AndroidStudioProjects/OutfitKatyaPublic/app/src/main/res/layout/fragment_mum.xml" value="0.29583333333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
