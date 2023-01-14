@@ -13,7 +13,7 @@ data class Outfit(
 
 @Entity
 data class KatyaTime(
-    @PrimaryKey val katyaTimeId: Int,
+    @PrimaryKey val kid: Int,
     @ColumnInfo(name = "outfit_creator_id") val outfitCreatorId: Int,
     @ColumnInfo(name = "hour") val hour: Int,
     @ColumnInfo(name = "minute") val minute: Int,

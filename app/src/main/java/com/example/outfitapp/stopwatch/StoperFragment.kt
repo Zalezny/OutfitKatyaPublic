@@ -295,21 +295,19 @@ class StoperFragment : Fragment() {
                     second = secondTime.toInt(),
                     date = date,
                     outfitCreatorId = outfitID.toInt(),
-                    katyaTimeId = IdGeneratorHelper(activity!!).takeNewKatyaTimeId()
+                    kid = IdGeneratorHelper(activity!!).takeNewKatyaTimeId()
                 )
                 val database = (activity!!.application as OutfitApplication).db
                 val katyaTimeDao = (activity!!.application as OutfitApplication).repositoryKatyaTime
 
                 database.withTransaction {
                     katyaTimeDao.insertKatyaTime(timeToSend)
-                    val result = database.outfitDao().getOutfitWithKatyaTime()
-                    Log.d("TESTUIEMY", "$result")
                 }
 
                 activity!!.runOnUiThread {
                     Toast.makeText(activity, "Wysłano do bazy!", Toast.LENGTH_SHORT).show()
 
-                    refreshTimeAdapter(date, time, timeToSend.katyaTimeId.toString())
+                    refreshTimeAdapter(date, time, timeToSend.kid.toString())
                 }
             }
             //TODO: Mom Hours

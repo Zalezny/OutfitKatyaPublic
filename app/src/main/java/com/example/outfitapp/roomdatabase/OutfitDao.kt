@@ -20,8 +20,8 @@ interface OutfitDao {
     suspend fun delete(outfitName: Outfit)
 
     @Transaction
-    @Query("SELECT * FROM outfit")
-    suspend fun getOutfitWithKatyaTime() : List<OutfitWithKatyaTime>
+    @Query("SELECT * FROM outfit WHERE oid = :outfitId")
+    suspend fun getOutfitWithKatyaTime(outfitId: Int) : List<OutfitWithKatyaTime>
 
 
 }
@@ -30,5 +30,8 @@ interface OutfitDao {
 interface KatyaTimeDao {
     @Insert
     suspend fun insertKatyaTime(vararg katyaTime: KatyaTime)
+
+    @Query("DELETE FROM katyatime WHERE kid = :katyaTimeId")
+    suspend fun deleteByKatyaTimeId(katyaTimeId: Int)
 }
 

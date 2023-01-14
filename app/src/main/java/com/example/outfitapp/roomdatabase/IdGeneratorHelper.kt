@@ -18,7 +18,6 @@ class IdGeneratorHelper(context : Context) {
             putInt(OUTFIT_VALUE_KEY, freeValue + 1)
             apply()
         }
-        Log.d("tTESTUIEMY", "takeNewOutfitId $freeValue")
         return freeValue
     }
 
@@ -33,7 +32,6 @@ class IdGeneratorHelper(context : Context) {
             putInt(KATYA_TIME_VALUE_KEY, freeValue + 1)
             apply()
         }
-        Log.d("tTESTUIEMY", "takeNewKatyaTimeId $freeValue")
         return freeValue
     }
 }
