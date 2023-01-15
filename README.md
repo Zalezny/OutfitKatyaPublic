@@ -1,10 +1,12 @@
 # OutfitKatya
 
-This is a [Kotlin](https://kotlinlang.org/) project with Android SDK done. <b>I use in that's project:</b> MATERIAL DESIGN, OKHTTP3, GSON, VIEWMODEL WITH LIFECYCLE, FOREGROUND SERVICE, SERVICE, COROUTINES
+This is a [Kotlin](https://kotlinlang.org/) project with Android SDK done. <b>I use in that's project:</b> MATERIAL DESIGN, OKHTTP3, GSON, VIEWMODEL WITH LIFECYCLE, FOREGROUND SERVICE, SERVICE, COROUTINES, ROOM DATABASES (SQL)
 
 ## Getting Started
 
-Unfortunately, this application will not start when you load to Android Studio. The reason is the missing two files: first with const database and google-services.json. But I'm working on the test server for this app.
+~~Unfortunately, this application will not start when you load to Android Studio. The reason is the missing two files: first with const database and google-services.json. But I'm working on the test server for this app.~~
+
+The application was transformed from online database to a local database (using Room) to show how the application works. You can easily clone that's repository and test it. In files have been commented out code for online database (it is useless without const of database online).  
 
 ## Information
 
@@ -19,6 +21,8 @@ App has inbuild Countdown Timer which use [Service](https://developer.android.co
 To communication between Service and activities is used [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) from Jetpack library and lifecycle.
 
 It is using [okhttp3](https://square.github.io/okhttp/) and [Gson](https://github.com/google/gson) to decipher and communication with database.
+
+To create local database was used [Room](https://developer.android.com/jetpack/androidx/releases/room).
 
 ## How it's work
 
@@ -42,3 +46,8 @@ After scroll down show up two tabs: Mom and Katya. There are times of working fo
 <p align="center">
 <img src="https://user-images.githubusercontent.com/65240240/198520748-d85e9df8-787e-45ac-9b9c-6dddd84d123c.png" alt="stopwatchRunningImage" width="600"/>
 </p>
+
+
+
+
+
