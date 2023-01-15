@@ -25,7 +25,7 @@ import com.example.outfitapp.application.OutfitApplication
 import com.example.outfitapp.recyclers.HourAdapter
 import com.example.outfitapp.models.HoursDataModel
 import com.example.outfitapp.models.TimeDataModel
-import com.example.outfitapp.roomdatabase.OutfitWithKatyaTime
+import com.example.outfitapp.roomdatabase.entities.OutfitWithKatyaTime
 import com.example.outfitapp.util.TimeUtil
 import com.example.outfitapp.viewmodels.TimeViewModel
 import com.google.android.material.snackbar.Snackbar

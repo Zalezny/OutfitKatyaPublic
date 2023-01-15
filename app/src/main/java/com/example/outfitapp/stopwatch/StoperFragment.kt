@@ -29,8 +29,7 @@ import com.example.outfitapp.application.OutfitApplication
 import com.example.outfitapp.models.OutfitDataModel
 import com.example.outfitapp.recyclers.OutfitAdapter
 import com.example.outfitapp.roomdatabase.IdGeneratorHelper
-import com.example.outfitapp.roomdatabase.KatyaTime
-import com.example.outfitapp.roomdatabase.Outfit
+import com.example.outfitapp.roomdatabase.entities.KatyaTime
 import com.example.outfitapp.util.StopwatchUtil
 import com.example.outfitapp.util.TimeUtil
 

@@ -1,6 +1,7 @@
 package com.example.outfitapp.roomdatabase
 
 import androidx.room.*
+import com.example.outfitapp.roomdatabase.entities.OutfitWithKatyaTime
 
 @Dao
 interface OutfitDao {
@@ -26,12 +27,5 @@ interface OutfitDao {
 
 }
 
-@Dao
-interface KatyaTimeDao {
-    @Insert
-    suspend fun insertKatyaTime(vararg katyaTime: KatyaTime)
 
-    @Query("DELETE FROM katyatime WHERE kid = :katyaTimeId")
-    suspend fun deleteByKatyaTimeId(katyaTimeId: Int)
-}
 
